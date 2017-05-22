@@ -1,0 +1,17 @@
+#!/bin/bash
+
+current_dir=`pwd`
+cmd_path=`which $0`
+
+if [ ! -L /etc/alternatives/gvim ]
+then
+    sudo update-alternatives --install /usr/bin/gvim gvim $cmd_path 100
+fi
+
+rel_path=`readlink /etc/alternatives/gvim`
+if [[ x$rel_path != x$cmd_path ]]
+then
+    sudo update-alternatives --set gvim $cmd_path
+fi
+
+vim -g -p --servername QRS  $@
