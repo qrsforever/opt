@@ -2,6 +2,11 @@
 
 current_dir=/data/opt
 
+export workspace=/workspace
+export data=/data
+export project=/project 
+export tags=$project/tags
+
 make_opt_link()
 {
     if [[ $# < 2 ]]
@@ -16,7 +21,7 @@ make_opt_link()
     fi
 }
 
-for file in `ls $current_dir`
+for file in `ls $current_dir 2>/dev/null`
 do
     if [ -d $current_dir/$file -a -e $current_dir/$file/.env.sh ] 
     then
@@ -24,6 +29,14 @@ do
         source .env.sh
         cd - 2>/dev/null
     fi
+done
+
+for file in `ls $workspace 2>/dev/null`
+do
+   if [ -d $workspace/$file/project/bin ] 
+   then
+        export PATH=$workspace/$file/project/bin:$PATH
+   fi
 done
 
 unset file
