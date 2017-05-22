@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# sudo apt-get install expect
+
+PASSWD=`cat ~/.leeco_passwd`
+PORT="54130"
+HOST="10.142.130.7:22"
+
+res=`lsof -i4:54130 | wc -l`
+
+if [ x"$res" != x2 ]
+then
+/usr/bin/expect << ENDOFEXPECT
+    set timeout 3
+
+    # if { [llength $argv] < 1} { 
+    #     puts "Usage:" 
+    #     puts "$argv0 " 
+    #     exit 1 
+    # }
+    # set port [lindex $argv 0]
+
+    spawn ssh -fN -L $PORT:$HOST lidong8@jump3.oss.letv.cn -p 50022
+
+    expect { 
+        "yes/no" { send "yes\r"; exp_continue }
+        "password:" { send "$PASSWD\r"; exp_continue } 
+    }
+ENDOFEXPECT
+fi
+
+ssh -p $PORT andbase@localhost
