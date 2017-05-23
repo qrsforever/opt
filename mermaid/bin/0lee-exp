@@ -27,6 +27,10 @@ then
         "password:" { send "$PASSWD\r"; exp_continue } 
     }
 ENDOFEXPECT
+
+PASSWD=`echo $PASSWD | cut -c1-8`
+sudo mount -o user=andbase,password=$PASSWD,uid=1000,gid=1000 //10.142.130.7/workspace /data/vnc/r130
+
 fi
 
 ssh -p $PORT andbase@localhost
