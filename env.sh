@@ -4,8 +4,8 @@ current_dir=/data/opt
 
 export workspace=/workspace
 export data=/data
-export project=/project 
-export tags=$project/tags
+export projects=/projects
+export tags=$projects/tags
 
 make_opt_link()
 {
