@@ -27,7 +27,7 @@ do
     then
         cd $current_dir/$file 2>/dev/null
         source .env.sh
-        cd - 2>/dev/null
+        cd - 1>/dev/null
     fi
 done
 
@@ -41,3 +41,9 @@ done
 
 unset file
 unset current_dir
+
+# 终端提示符简化
+xps()
+{
+    export PS1='\W$ '
+}

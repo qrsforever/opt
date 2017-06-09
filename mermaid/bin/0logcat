@@ -11,6 +11,6 @@ file=`date +%H%M%S`
 adb wait-for-device 
 if [[ "$1"x == x ]]
 then
-    adb shell logcat -b main -b events -b system -c 
+    adb shell logcat -c 
 fi
 adb shell logcat -b main -b events -b system -v threadtime *:V | tee /tmp/xlog/$DATEFILE/$file.logcat
