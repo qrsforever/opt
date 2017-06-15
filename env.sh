@@ -1,6 +1,7 @@
 #!/bin/bash
 
-current_dir=/data/opt
+current_dir=`dirname ${BASH_SOURCE[0]}`
+current_dir=`cd $current_dir; pwd`
 
 export workspace=/workspace
 export data=/data
