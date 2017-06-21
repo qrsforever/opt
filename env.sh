@@ -48,3 +48,6 @@ xps()
 {
     export PS1='\W$ '
 }
+
+# 在~/.bashrc添加
+# stty stop ''
