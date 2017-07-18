@@ -1,6 +1,6 @@
 # !/bin/bash
 
-export HADOOP_VERSION=2.8.0
+export HADOOP_VERSION=2.7.3
 export HADOOP_HOME=`pwd`/hadoop-${HADOOP_VERSION}
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
