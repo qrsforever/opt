@@ -16,10 +16,11 @@ make_opt_link()
         return
     fi
 
-    if [ ! -L /opt/$1 ]
+    if [ -L /opt/$1 ]
     then
-        ln -s $2 /opt/$1
+        rm -f /opt/$1
     fi
+    ln -s $2 /opt/$1
 }
 
 for file in `ls $current_dir 2>/dev/null`
