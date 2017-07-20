@@ -14,4 +14,15 @@ then
     sudo update-alternatives --set gvim $cmd_path
 fi
 
-vim -g -p --servername QRS  --remote-tab-silent $@
+ss=`vim --serverlist | head -n1`
+if [[ x$ss == x"QRS" ]]
+then
+    if [[ x$@ != x ]]
+    then
+        vim -g -p --servername QRS --remote-tab-silent $@
+    else 
+        vim -g -p -f --servername QRS --remote-send ":NERDTree $current_dir <cr>"
+    fi
+else
+    vim -g -p --servername QRS $@
+fi
