@@ -32,6 +32,7 @@ do
             continue
         fi
         $TOMCAT_HOME/bin/shutdown.sh
+        sleep 3
         # echo -e "\n#### $pro_dir/etc/opengrok.conf:\n"
         # cat $pro_dir/etc/opengrok.conf 
         webapp_addr=`cat $pro_dir/etc/opengrok.conf | grep OPENGROK_WEBAPP_CFGADD | cut -d= -f2`
