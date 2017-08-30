@@ -35,7 +35,6 @@ do
         echo "Info: Shutdown tomcat for release port"
         $TOMCAT_HOME/bin/shutdown.sh
         sleep 2
-
         webapp_addr=`cat $pro_dir/etc/opengrok.conf | grep OPENGROK_WEBAPP_CFGADD | cut -d= -f2`
         if [[ x$webapp_addr == x ]]
         then
