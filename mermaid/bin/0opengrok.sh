@@ -5,6 +5,7 @@ opengrok_bin_dir=`which OpenGrok`
 opengrok_bin_dir=`dirname $opengrok_bin_dir`
 opengrok_top_dir=`dirname $opengrok_bin_dir`
 
+
 echo "Info: opengrok_pro_dir: $opengrok_pro_dir"
 echo "Info: opengrok_bin_dir: $opengrok_bin_dir"
 echo "Info: opengrok_top_dir: $opengrok_top_dir"
@@ -31,18 +32,18 @@ do
             echo -e "\n Error: $pro_dir/etc/opengrok.conf file Not found!\n"
             continue
         fi
+        echo "Info: Shutdown tomcat for release port"
         $TOMCAT_HOME/bin/shutdown.sh
-        sleep 3
-        # echo -e "\n#### $pro_dir/etc/opengrok.conf:\n"
-        # cat $pro_dir/etc/opengrok.conf 
+        sleep 2
         webapp_addr=`cat $pro_dir/etc/opengrok.conf | grep OPENGROK_WEBAPP_CFGADD | cut -d= -f2`
         if [[ x$webapp_addr == x ]]
         then
             webapp_addr=localhost:2424
         fi
         port=`echo $webapp_addr | cut -d\: -f2`
-        echo -e "\n####check port($port):\n"
+        echo "Info: check port($port):"
         netstat -anp | grep $port
+
         rm -rf $pro_dir/log/
         rm -rf $pro_dir/etc/configuration.xml
         if [ ! -d $pro_dir/data ]
@@ -53,18 +54,29 @@ do
         then
             mkdir -p $pro_dir/log
         fi
+
+        echo "Info: Update source.war"
         cp $opengrok_top_dir/lib/source.war ${pro_dir}.war
         unzip ${pro_dir}.war WEB-INF/web.xml
         sed -i -e 's:/var/opengrok/etc/configuration.xml:'"$pro_dir/etc/configuration.xml"':g' "WEB-INF/web.xml"    
         sed -i -e 's/localhost:2424/'"$webapp_addr"'/g' "WEB-INF/web.xml"
         zip ${pro_dir}.war -u WEB-INF/web.xml
         rm -rf WEB-INF
+
+        echo "Info: Deploy ${pro_dir}.war to webapps"
+        mv ${pro_dir}.war $TOMCAT_HOME/webapps/
+
+        echo "Info: Delete old ${pro_dir}.war"
         rm -rf $TOMCAT_HOME/${pro_dir}*
         $TOMCAT_HOME/bin/startup.sh
-        echo "Info: Wait 5s for tomcat startup"
+        echo "Info: Sleep 5s for waitting tomcat startup"
         sleep 5
-        mv ${pro_dir}.war $TOMCAT_HOME/webapps/
-        OPENGROK_INSTANCE_BASE=$pro_dir OPENGROK_CONFIGURATION=$pro_dir/etc/opengrok.conf OpenGrok index 
+
+        echo "Info: Start opengrok for $pro_dir"
+        OPENGROK_INSTANCE_BASE=$pro_dir \
+            OPENGROK_WEBAPP_CONTEXT=$pro \
+            OPENGROK_CONFIGURATION=$pro_dir/etc/opengrok.conf \
+            OpenGrok index 
     else
         echo "\n Error: $pro_dir directory Not found!\n"
     fi
