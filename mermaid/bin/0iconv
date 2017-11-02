@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "Use: `basename $0` [src_dir] [src_code] [dst_code]"
+
+src_code=GB18030
+dst_code=UTF8
+src_dir=.
+
+if [[ x$1 != x ]];
+then
+    src_dir=$1
+fi
+
+if [[ x$2 != x ]];
+then
+    src_code=$2
+fi
+
+if [[ x$3 != x ]];
+then
+    dst_code=$3
+fi
+
+echo "iconv -f $src_code -t $dst_code for $src_dir"
+
+for file in `find $src_dir -type f`
+do
+    echo $file
+    iconv -f $src_code -t $dst_code $file > /tmp/iconv.tmp
+    mv /tmp/iconv.tmp $file
+done
