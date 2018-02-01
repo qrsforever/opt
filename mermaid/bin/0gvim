@@ -27,7 +27,7 @@ then
     then
         vim -g -p --servername QRS --remote-tab-silent $@
     else 
-        vim -g -p -f --servername QRS --remote-send ":NERDTree $current_dir <cr>"
+        vim -g -p --servername QRS --remote-send ":NERDTree $current_dir <cr>"
     fi
 else
     vim -g -p --servername QRS $@
