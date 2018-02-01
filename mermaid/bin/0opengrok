@@ -4,7 +4,7 @@
 # 执行：
 #     0opengrok hadoop other
 # 访问：
-      http://localhost:8080/hadoop
+#     http://localhost:8080/hadoop
 # 
 # 先在opengrok 工程目录下创建子工程（如hadoop）
 # 
