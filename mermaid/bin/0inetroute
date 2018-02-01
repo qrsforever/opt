@@ -24,11 +24,13 @@ inetarr=(
     10.183.0.0
     47.95.0.0
     125.39.0.0
+    118.178.0.0
 )
 
 # 47.95.49.160 blog.csdn.net
 # 125.39.83.119 user.qzone.qq.com
 # 10.183.97.38 imgrepo-cnbj.devops.letv.com
+# 118.178.213.186 www.zhihu.com
 
 for item in ${inetarr[*]}
 do
