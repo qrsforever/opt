@@ -97,3 +97,29 @@ do
         echo "\n Error: $pro_dir directory Not found!\n"
     fi
 done
+
+
+# DEST_PRO="Ares"
+# ARES_DIR=/data/source/Ares
+# OPENGROK_DIR=/projects/opengrok
+# 
+# __git_up() {
+#     cd $ARES_DIR
+#     result=`git pull | head -n1  | cut -d\  -f1`
+#     if [[ x$result == x"Alreadyx" ]]
+#     then
+#         echo "0"
+#     else
+#         echo "1"
+#     fi
+# }
+# 
+# while (( 1 )) 
+# do
+#     if [[ x$(__git_up) == x"1" ]]
+#     then
+#         cd $OPENGROK_DIR
+#         0opengrok ${DEST_PRO}
+#     fi
+#     sleep 3600
+# done
