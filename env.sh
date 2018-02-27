@@ -8,6 +8,8 @@ export data=/data
 export projects=/projects
 export tags=$projects/tags
 
+export PATH=$current_dir/ubuntu/bin:$PATH
+
 make_opt_link()
 {
     if [[ $# < 2 ]]

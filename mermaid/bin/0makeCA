@@ -22,7 +22,7 @@
 #
 
 PROJECT_NAME="Ares"
-SERVER_IP="10.58.51.144"
+SERVER_IP="10.58.64.12"
 CLIENT_IP="10.58.64.12"
 
 # Generate the openssl configuration files.
@@ -61,9 +61,9 @@ mkdir client
 mkdir certDER
 
 # private key generation
-openssl genrsa -out ca.key 1024
-openssl genrsa -out server.key 1024
-openssl genrsa -out client.key 1024
+openssl genrsa -out ca.key 2048
+openssl genrsa -out server.key 2048
+openssl genrsa -out client.key 2048
 
 # cert requests
 openssl req -out ca.req -key ca.key -new -config ./ca_cert.conf

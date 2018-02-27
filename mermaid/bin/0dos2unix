@@ -1,0 +1,10 @@
+#!/bin/bash
+
+dir="."
+
+if [[ x$1 != x ]]
+then
+    dir=$1
+fi
+
+find $dir -type f -exec dos2unix {} \;
