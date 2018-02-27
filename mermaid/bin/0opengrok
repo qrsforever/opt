@@ -1,10 +1,26 @@
 #!/bin/bash
 
+#########
+# 执行：
+#     0opengrok hadoop other
+# 访问：
+#     http://localhost:8080/hadoop
+# 
+# 先在opengrok 工程目录下创建子工程（如hadoop）
+# 
+#   hadoop/
+#      |-- etc
+#      |   `-- opengrok.conf  (模板:marmaid/etc/opengrok.conf)
+#      `-- src
+#          |-- hadoop-common-project -> /data/opt/hadoop/hadoop-2.7.3-src/hadoop-common-project
+#          |-- hadoop-hdfs-project -> /data/opt/hadoop/hadoop-2.7.3-src/hadoop-hdfs-project/
+#          `-- hadoop-yarn-project -> /data/opt/hadoop/hadoop-2.7.3-src/hadoop-yarn-project/
+#########
+
 opengrok_pro_dir=`pwd`
 opengrok_bin_dir=`which OpenGrok`
 opengrok_bin_dir=`dirname $opengrok_bin_dir`
 opengrok_top_dir=`dirname $opengrok_bin_dir`
-
 
 echo "Info: opengrok_pro_dir: $opengrok_pro_dir"
 echo "Info: opengrok_bin_dir: $opengrok_bin_dir"
@@ -81,3 +97,29 @@ do
         echo "\n Error: $pro_dir directory Not found!\n"
     fi
 done
+
+
+# DEST_PRO="Ares"
+# ARES_DIR=/data/source/Ares
+# OPENGROK_DIR=/projects/opengrok
+# 
+# __git_up() {
+#     cd $ARES_DIR
+#     result=`git pull | head -n1  | cut -d\  -f1`
+#     if [[ x$result == x"Alreadyx" ]]
+#     then
+#         echo "0"
+#     else
+#         echo "1"
+#     fi
+# }
+# 
+# while (( 1 )) 
+# do
+#     if [[ x$(__git_up) == x"1" ]]
+#     then
+#         cd $OPENGROK_DIR
+#         0opengrok ${DEST_PRO}
+#     fi
+#     sleep 3600
+# done
