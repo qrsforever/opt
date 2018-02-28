@@ -23,3 +23,5 @@
 1 	10	*	*	*	/projects/opengrok/crontab_update.sh
 1 	15	*	*	*	/projects/opengrok/crontab_update.sh
 1 	20	*	*	*	/projects/opengrok/crontab_update.sh
+1 	*	*	*	*	/projects/tags/crontab_update.sh
+31	*	*	*	*	/projects/tags/crontab_update.sh
