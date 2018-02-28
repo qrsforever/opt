@@ -11,6 +11,8 @@ categories: [  ]
 
 ```
 mosquitto_passwd -c /opt/mermaid/etc/mosquitto/password.txt "air-1&9RrZXcGctqe"
+or
+mosquitto_passwd -b /opt/mermaid/etc/mosquitto/password.txt "air-1&9RrZXcGctqe" 123456
 ```
 
 # 运行

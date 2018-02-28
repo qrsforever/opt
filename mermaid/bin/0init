@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# ETC_DIR="/opt/mermaid/etc"
+# 
+# mosquitto -v -d -c $ETC_DIR/mosquitto/mosquitto.1883.conf
+# mosquitto -v -d -c $ETC_DIR/mosquitto/mosquitto.8883.conf
+# 
+# crontab $ETC_DIR/crontab/tasks.crontab
