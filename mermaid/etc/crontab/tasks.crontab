@@ -20,4 +20,6 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-1	10	*	*	*	/home/lidong/update_opengrok.sh
+1 	10	*	*	*	/projects/opengrok/crontab_update.sh
+1 	15	*	*	*	/projects/opengrok/crontab_update.sh
+1 	20	*	*	*	/projects/opengrok/crontab_update.sh
