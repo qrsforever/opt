@@ -1,9 +1,15 @@
 #!/bin/bash
 
-############## DEMO TEMPLATE ################
+DST_DIR=Ares
+SRC_DIR=/data/source/$DST_DIR
+TAG_DIR=/projects/tags/$DST_DIR
+GRO_DIR=/projects/opengrok/$DST_DIR
 
-ARES_SRC_DIR=/data/source/Ares
-ARES_TAG_DIR=/projects/tags/Ares
+
+if [ ! -d $SRC_DIR ]
+then
+    exit 0
+fi
 
 __git_up() {
     cd $1 
@@ -17,12 +23,19 @@ __git_up() {
     cd - >/dev/null
 }
 
-if [[ x$(__git_up $ARES_SRC_DIR) == x"1" ]]
+if [[ x$(__git_up $SRC_DIR) == x"1" ]]
 then
-    cd $ARES_TAG_DIR
-    if [ -f $ARES_TAG_DIR/db.sh ]
+    if [ -f $TAG_DIR/db.sh ]
     then
-        . $ARES_TAG_DIR/db.sh
+        cd $TAG_DIR
+        . db.sh
+        cd - >/dev/null
+    fi
+    if [ -d $GRO_DIR ]
+    then
+        cd $GRO_DIR
+        0opengrok
+        cd - >/dev/null
     fi
     cd - >/dev/null
 fi
