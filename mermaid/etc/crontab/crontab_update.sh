@@ -39,5 +39,5 @@ then
     fi
 fi
 
-logdt=`data +%Y/%m/%d %H:%M:%S`
+logdt=`data +"%Y/%m/%d %H:%M:%S"`
 echo "Last $logdt" > /tmp/projects_crontab_update.txt
