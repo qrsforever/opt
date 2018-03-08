@@ -1,44 +1,43 @@
 #!/bin/sh
 ':' //; exec "`command -v nodejs || command -v node`" "$0"
 
-var MarkdownIt = require('markdown-it');
+var markdown = require('marked');
 var hljs = require('highlight.js');
+
 var server = require('http').createServer(httpHandler),
     exec = require('child_process').exec,
     io = require('socket.io').listen(server),
     send = require('send'),
     server,
     socket;
-
 server.listen(8090);
 
-var md = new MarkdownIt({
-  html: true,
-  linkify: true,
-  highlight: function(str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, str).value;
-      } catch (err) {
-        // Do nothing
-      }
-    } else {
-    return str;
-    }
-  }
+markdown.setOptions({
+    renderer: new markdown.Renderer(),
+    highlight: function(code) {
+            return hljs.highlightAuto(code).value;
+          },
+    pedantic: false,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    xhtml: false
 });
 
 function writeMarkdown(input, output) {
-  var body = '';
-  input.on('data', function(data) {
-    body += data;
-    if (body.length > 1e6) {
-      throw new Error('The request body is too long.');
-    }
-  });
-  input.on('end', function() {
-    output.emit('newContent', md.render(body));
-  });
+    var body = '';
+    input.on('data', function(data) {
+        body += data;
+        if (body.length > 1e6) {
+            throw new Error('The request body is too long.');
+        }
+    });
+    input.on('end', function() {
+        output.emit('newContent', markdown(body));
+    });
 }
 
 function httpHandler(req, res) {
@@ -86,16 +85,15 @@ function httpHandler(req, res) {
 
 io.set('log level', 1);
 io.sockets.on('connection', function(sock){
-  socket = sock;
-  process.stdout.write('connection established!');
-  writeMarkdown(process.stdin, socket);
-  process.stdin.resume();
+    socket = sock;
+    process.stdout.write('connection established!');
+    writeMarkdown(process.stdin, socket);
+    process.stdin.resume();
 });
 
-
 if (process.platform.toLowerCase().indexOf('darwin') >= 0){
-  exec('open -g http://localhost:8090', function(error, stdout, stderr){});
+    exec('open -g http://localhost:8090', function(error, stdout, stderr){});
 }
 else {  // assume unix/linux
-  exec('xdg-open http://localhost:8090', function(error, stdout, stderr){});
+    exec('xdg-open http://localhost:8090', function(error, stdout, stderr){});
 }

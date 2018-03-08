@@ -1,6 +1,9 @@
 #!/bin/bash
 
+# sudo npm -g install instant-markdown-d
+# sudo npm -g install marked
+
 DST_DIR=/usr/lib/node_modules/instant-markdown-d
 
-# docco.css come from /usr/lib/node_modules/highlight.js/styles
-sudo cp docco.css github-markdown.css index.html instant-markdown-d $DST_DIR
+# 使用marked取代原来的markdown-it
+sudo cp github-markdown.css index.html instant-markdown-d $DST_DIR
