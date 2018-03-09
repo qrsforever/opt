@@ -4,6 +4,30 @@
 var markdown = require('marked');
 var hljs = require('highlight.js');
 
+function highlightUtil(str, lang, wrap) {
+    var data = hljs.highlightAuto(str);
+    if (!wrap) 
+        return data.value;
+
+    var lines = data.value.split('\n');
+    var numbers = '';
+    var content = '';
+    var result = '';
+    var line;
+
+    for (var i = 0, len = lines.length; i < len; i++) {
+        line = lines[i];
+        numbers += '<span class="line">' + (i+1) + '</span><br>';
+        content += line + '<br>';
+    }
+    result += '<table><tr>';
+    result += '<td class="gutter">' + numbers + '</td>';
+    result += '<td class="code">' + content + '</td>';
+    result += '</tr></table>';
+
+    return result;
+}
+
 var server = require('http').createServer(httpHandler),
     exec = require('child_process').exec,
     io = require('socket.io').listen(server),
@@ -14,9 +38,9 @@ server.listen(8090);
 
 markdown.setOptions({
     renderer: new markdown.Renderer(),
-    highlight: function(code) {
-            return hljs.highlightAuto(code).value;
-          },
+    highlight: function(code, lang) {
+        return highlightUtil(code, lang, true);
+    },
     pedantic: false,
     gfm: true,
     tables: true,
