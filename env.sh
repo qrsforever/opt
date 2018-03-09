@@ -8,7 +8,7 @@ export data=/data
 export projects=/projects
 export tags=$projects/tags
 
-export PATH=$current_dir/ubuntu/bin:$PATH
+export PATH=$current_dir/ubuntu/bin:$HOME/.vim/bin:$PATH
 
 make_opt_link()
 {
