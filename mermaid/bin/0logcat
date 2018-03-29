@@ -6,11 +6,15 @@ then
     mkdir -p /tmp/xlog/$DATEFILE
 fi
 
+adb='/data/source/mainline/mstar648/out/host/linux-x86/bin/adb'
+
 log=/tmp/xlog/$DATEFILE
 file=`date +%H%M%S`
-adb wait-for-device 
+${adb} wait-for-device 
 if [[ "$1"x == x ]]
 then
-    adb shell logcat -c 
+    ${adb} shell logcat -c 
 fi
-adb shell logcat -b main -b events -b system -v threadtime *:V | tee /tmp/xlog/$DATEFILE/$file.logcat
+
+${adb} shell logcat | tee /tmp/xlog/$DATEFILE/$file.logcat
+# ${adb} shell logcat -b main -b events -b system -v threadtime *:V | tee /tmp/xlog/$DATEFILE/$file.logcat
