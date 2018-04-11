@@ -8,7 +8,7 @@ export data=/data
 export projects=/projects
 export tags=$projects/tags
 
-export PATH=$current_dir/ubuntu/bin:$HOME/.vim/bin:$PATH
+export PATH=$HOME/.vim/bin:$PATH
 
 make_opt_link()
 {
@@ -22,7 +22,10 @@ make_opt_link()
     then
         rm -f /opt/$1
     fi
-    ln -s $2 /opt/$1
+    if [ -d $2 ]
+    then
+        ln -s $2 /opt/$1
+    fi 
 }
 
 for file in `ls $current_dir 2>/dev/null`
@@ -35,11 +38,11 @@ do
     fi
 done
 
-for file in `ls $workspace 2>/dev/null`
+for file in `ls $workspace/tools 2>/dev/null`
 do
-   if [ -d $workspace/$file/project/bin ] 
+   if [ -d $workspace/tools/$file/bin ] 
    then
-        export PATH=$workspace/$file/project/bin:$PATH
+        export PATH=$workspace/tools/$file/bin:$PATH
    fi
 done
 

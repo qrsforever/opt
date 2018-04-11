@@ -1,0 +1,65 @@
+#!/bin/bash
+
+CMD=`which sdkmanager`
+
+if [[ x$CMD == x ]]
+then
+    echo "Not found sdkmanager!"
+    exit 0
+fi
+
+needproxy1=`echo ${@} | grep "install"`
+needproxy2=`echo ${@} | grep "update"`
+if [[ x$needproxy1 == x && x$needproxy2 == x ]]
+then
+    $CMD ${@}
+    exit 0
+fi
+
+echo "Select proxy:"
+
+proxys=(
+    "NONE"
+    "大连东软       http mirrors.neusoft.edu.cn  80"
+    "北京化工       http ubuntu.buct.edu.cn      80"
+    "大连理工大学   http mirror.dlut.edu.cn      80"
+    "中国科学院     http mirrors.opencas.cn      80"
+    "上海GDG        http sdk.gdgshanghai.com     8000"
+    )
+
+i=0
+for proxy in "${proxys[@]}"
+do
+    for label in ${proxy[@]}
+    do
+        echo -e "  $i. ${label}"
+        break
+    done
+    ((i=i+1))
+done
+
+echo -n "Input: "
+read select
+
+for item in "${@}"
+do
+    if [[ x${item} == x"--install" || x${item} == x"--update" ]]
+    then
+        params="$params ${item}"
+        continue
+    fi
+    params="$params \"$item\""
+done
+
+__RUN_CMD() {
+    echo "$CMD ${@}"
+    $CMD "${@}"
+}
+
+if (( $select == 0 ))
+then
+    __RUN_CMD $params
+else
+    proxy=(${proxys[$select]})
+    __RUN_CMD --no_https --verbose --proxy=${proxy[1]} --proxy_host=${proxy[2]} --proxy_port=${proxy[3]} $params
+fi

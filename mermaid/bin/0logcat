@@ -1,12 +1,12 @@
 #!/bin/bash
 
+adb=`which adb`
+
 DATEFILE=`date +%Y%m%d`
 if [[ ! -d /tmp/xlog/$DATEFILE ]]
 then
     mkdir -p /tmp/xlog/$DATEFILE
 fi
-
-adb='/data/source/mainline/mstar648/out/host/linux-x86/bin/adb'
 
 log=/tmp/xlog/$DATEFILE
 file=`date +%H%M%S`
