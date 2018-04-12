@@ -5,16 +5,16 @@ __run_show_containers() {
     # {{.Ports}} {{.Command}} {{.Labels}}"
     if [[ x$1 == x ]]
     then
-        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}"
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}"
     else
-        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}" | egrep "NAMES"\|$1
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}" | egrep "NAMES"\|$1
     fi
     echo "----------------------------------------------------------------------------"
 }
 
 __run_show_ip() {
     echo "----------------------------------------------------------------------------"
-    echo -e "   IP   \t\tNAME"
+    echo -e "   IP    \tPORT \t\tNAME"
     if [[ x$1 == x ]]
     then
         ids=$(docker ps -aq)
@@ -23,12 +23,21 @@ __run_show_ip() {
     fi
     for id in $ids
     do
+        app_port=`docker inspect --format="{{.Name}}:{{.Config.Env}}" $id`
+        port=${app_port##*APP_PORT=}
+        if [[ x"$port" == x"$app_port" ]]
+        then
+            port=*****
+        else
+            port=${port%%]*}
+        fi
+        
         result=`docker inspect --format="{{.Name}}:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" $id`
         name=`echo $result | cut -d: -f1 | cut -c2-`
         ip=`echo $result | cut -d: -f2`
         if [[ x$ip != x ]]
         then
-            echo -e "$ip\t$name"
+            echo -e "$ip\t$port\t$name"
         fi
     done
     echo "----------------------------------------------------------------------------"
@@ -53,11 +62,23 @@ __run_show_inspect() {
     echo "----------------------------------------------------------------------------"
 }
 
+__run_open_consul_ui() {
+    echo "----------------------------------------------------------------------------"
+    ip=`ifconfig | grep -a1 "eth0" | grep "inet addr" | cut -d\: -f2 | cut -d\  -f1`
+    if [[ x$ip == x ]]
+    then
+        ip="localhost"
+    fi
+    xdg-open http://${ip}:8500/ui
+    echo "----------------------------------------------------------------------------"
+}
+
 __main() {
     echo "Select:"
     echo "1. Show containers"
     echo "2. Show ip"
     echo "3. Show inspect"
+    echo "4. Open consul ui"
 
     echo -n "Input: "
     read select
@@ -70,6 +91,9 @@ __main() {
             ;;
         3)
             __run_show_inspect $@
+            ;;
+        4)
+            __run_open_consul_ui
             ;;
         *)
             echo "Input error!"
