@@ -1,0 +1,80 @@
+#!/bin/bash
+
+__run_show_containers() {
+    echo "----------------------------------------------------------------------------"
+    # {{.Ports}} {{.Command}} {{.Labels}}"
+    if [[ x$1 == x ]]
+    then
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}"
+    else
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}" | egrep "NAMES"\|$1
+    fi
+    echo "----------------------------------------------------------------------------"
+}
+
+__run_show_ip() {
+    echo "----------------------------------------------------------------------------"
+    echo -e "   IP   \t\tNAME"
+    if [[ x$1 == x ]]
+    then
+        ids=$(docker ps -aq)
+    else
+        ids=($1)
+    fi
+    for id in $ids
+    do
+        result=`docker inspect --format="{{.Name}}:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" $id`
+        name=`echo $result | cut -d: -f1 | cut -c2-`
+        ip=`echo $result | cut -d: -f2`
+        if [[ x$ip != x ]]
+        then
+            echo -e "$ip\t$name"
+        fi
+    done
+    echo "----------------------------------------------------------------------------"
+}
+
+__run_show_inspect() {
+    if [[ x$1 == x ]]
+    then
+        echo "Error, run: 0docker [id/name]"
+        return
+    fi
+    echo "----------------------------------------------------------------------------"
+    # len=`echo $input | wc -L`
+    ret=`echo $1 | egrep '^[a-f0-9]{12}'`
+    if [[ x$ret == x ]]
+    then
+        echo "By name $1"
+    else
+        echo "By id $1"
+    fi
+    docker inspect $1
+    echo "----------------------------------------------------------------------------"
+}
+
+__main() {
+    echo "Select:"
+    echo "1. Show containers"
+    echo "2. Show ip"
+    echo "3. Show inspect"
+
+    echo -n "Input: "
+    read select
+    case $select in
+        1)
+            __run_show_containers $@
+            ;;
+        2)
+            __run_show_ip $@
+            ;;
+        3)
+            __run_show_inspect $@
+            ;;
+        *)
+            echo "Input error!"
+            ;;
+    esac
+}
+
+__main $@
