@@ -5,9 +5,9 @@ __run_show_containers() {
     # {{.Ports}} {{.Command}} {{.Labels}}"
     if [[ x$1 == x ]]
     then
-        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}"
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Ports}}"
     else
-        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}" | egrep "NAMES"\|$1
+        docker ps -a --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Ports}}" | egrep "NAMES"\|$1
     fi
     echo "----------------------------------------------------------------------------"
 }
@@ -73,12 +73,32 @@ __run_open_consul_ui() {
     echo "----------------------------------------------------------------------------"
 }
 
+__run_show_services() {
+	docker service ls $1
+}
+
+__run_show_logs() {
+    if [[ x$1 == x ]]
+    then
+        ids=$(docker ps -q)
+    else
+        ids=($1)
+    fi
+    for id in $ids
+    do
+        echo "============ Log($id) =========="
+        docker logs $id
+        echo ""
+    done
+}
+
 __main() {
     echo "Select:"
-    echo "1. Show containers"
-    echo "2. Show ip"
-    echo "3. Show inspect"
-    echo "4. Open consul ui"
+    echo "1. Show containers (docker ps -a)"
+    echo "2. Show ip (docker inspect | grep)"
+    echo "3. Show inspect (docker inspect)"
+    echo "4. Show services (docker service ls)"
+    echo "5. Show logs (docker logs)"
 
     echo -n "Input: "
     read select
@@ -93,7 +113,11 @@ __main() {
             __run_show_inspect $@
             ;;
         4)
-            __run_open_consul_ui
+            # __run_open_consul_ui
+			__run_show_services $@
+            ;;
+        5)
+			__run_show_logs $@
             ;;
         *)
             echo "Input error!"

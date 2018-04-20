@@ -21,9 +21,12 @@
 # Generate the certificates and keys for testing.
 #
 
-PROJECT_NAME="Ares"
-SERVER_IP="10.58.51.144"
-CLIENT_IP="10.58.64.12"
+echo "Please use easy-rsa instead: sudo apt-get install easy-rsa"
+sleep 3
+
+PROJECT_NAME="testca"
+SERVER_IP="10.58.82.240"
+CLIENT_IP="10.58.82.240"
 
 # Generate the openssl configuration files.
 cat > ca_cert.conf << EOF  
