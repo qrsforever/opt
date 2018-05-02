@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Ubuntu 必装
+
+sudo apt-get -y install p7zip-full
