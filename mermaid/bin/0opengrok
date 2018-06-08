@@ -95,10 +95,10 @@ do
         zip ${pro}.war -u WEB-INF/web.xml
         rm -rf WEB-INF
 
-        echo "Info: Delete old ${pro_dir}.war"
+        echo "Info: Delete old $TOMCAT_HOME/webapps/${pro}"
         rm -rf $TOMCAT_HOME/webapps/${pro}*
 
-        echo "Info: Deploy ${pro_dir}.war to webapps"
+        echo "Info: Deploy ${pro}.war to $TOMCAT_HOME/webapps/"
         mv ${pro}.war $TOMCAT_HOME/webapps/
 
         $TOMCAT_HOME/bin/startup.sh

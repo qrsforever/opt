@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [[ $# == 0 ]]
+then
+    echo "Error: $0 [file|dir]"
+    exit 0
+fi
+
+__main() {
+    if [[ -d $1 ]] 
+    then
+        git filter-branch --force --index-filter 'git rm --cached -r --ignore-unmatch $1' --prune-empty --tag-name-filter cat -- --all
+    else
+        git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch $1' --prune-empty --tag-name-filter cat -- --all
+    fi
+
+    echo -n "git push (y/n):"
+
+    read select 
+
+    if [[ x$select == xy ]]
+    then
+        git push origin master --force --all
+        git push origin master --force --tags
+        rm -rf .git/refs/original/
+        git reflog expire --expire=now --all
+        git gc --prune=now
+        git gc --aggressive --prune=now
+    fi
+}

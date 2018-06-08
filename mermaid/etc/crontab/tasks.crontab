@@ -20,5 +20,8 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-1 	*	*	*	*	/projects/crontab_update.sh
-31	*	*	*	*	/projects/crontab_update.sh
+0 	9	*	*	*	/projects/crontab_update.sh
+0 	12	*	*	*	/projects/crontab_update.sh
+0 	15	*	*	*	/projects/crontab_update.sh
+0 	18	*	*	*	/projects/crontab_update.sh
+0 	21	*	*	*	/projects/crontab_update.sh
