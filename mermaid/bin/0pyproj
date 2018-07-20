@@ -1,0 +1,61 @@
+#!/bin/bash
+
+BASE_NAME=`basename $PWD`
+
+echo -n "Input project name ($BASE_NAME): "
+
+read proj_name
+
+if [[ x$proj_name == x ]]
+then
+    proj_name=$BASE_NAME
+fi
+
+mkdir bin $proj_name tests docs
+
+touch $proj_name/__init__.py
+touch tests/__init__.py
+touch setup.py
+
+headstr+="#!/usr/bin/python3\n"
+headstr+="# -*- coding: utf-8 -*-\n"
+
+echo -e $headstr > setup.py
+
+echo "try:" >> setup.py
+echo "    from setuptools import setup" >> setup.py
+echo "except ImportError:" >> setup.py
+echo "    from distutils.core import setup" >> setup.py
+echo "" >> setup.py
+echo "config = {" >> setup.py
+echo "    'description': ''," >> setup.py
+echo "    'author': '',"  >> setup.py
+echo "    'url': ''," >> setup.py
+echo "    'download_url': ''," >> setup.py
+echo "    'author_email': ''," >> setup.py
+echo "    'version': '0.1'," >> setup.py
+echo "    'install_requires': ['nose']," >> setup.py
+echo "    'packages': ['$proj_name']," >> setup.py
+echo "    'scripts': []," >> setup.py
+echo "    'name': '$proj_name'"  >> setup.py
+echo "}" >> setup.py
+echo "" >> setup.py
+echo "setup(**config)" >> setup.py
+
+touch tests/${proj_name}_tests.py
+
+echo -e $headstr > tests/${proj_name}_tests.py
+
+echo "from nose.toolsimport *" >> tests/${proj_name}_tests.py
+echo "import $proj_name" >> tests/${proj_name}_tests.py
+echo "" >> tests/${proj_name}_tests.py
+echo "def setup():" >> tests/${proj_name}_tests.py
+echo "    print(\"SETUP!\")" >> tests/${proj_name}_tests.py
+echo "" >> tests/${proj_name}_tests.py
+echo "def teardown():" >> tests/${proj_name}_tests.py
+echo "    print(\"TEAR DOWN!\")" >> tests/${proj_name}_tests.py
+echo "" >> tests/${proj_name}_tests.py
+echo "def test_basic():" >> tests/${proj_name}_tests.py
+echo "   print(\"I RAN!\")" >> tests/${proj_name}_tests.py
+
+find . -name "*.py" | xargs chmod 777
