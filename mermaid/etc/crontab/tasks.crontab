@@ -21,7 +21,8 @@
 # 
 # m h  dom mon dow   command
 0 	9	*	*	*	/projects/crontab_update.sh
+0 	10	*	*	*	/projects/crontab_update.sh 1
 0 	12	*	*	*	/projects/crontab_update.sh
 0 	15	*	*	*	/projects/crontab_update.sh
-0 	18	*	*	*	/projects/crontab_update.sh
+0 	16	*	*	*	/projects/crontab_update.sh 1
 0 	21	*	*	*	/projects/crontab_update.sh
