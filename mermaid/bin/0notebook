@@ -1,0 +1,23 @@
+#!/bin/bash
+
+currdir=`pwd`
+pidfile=/tmp/jupyter_notebook_pid
+
+if [ ! -f $pidfile ]
+then
+    touch $pidfile
+fi
+
+pid=`cat $pidfile`
+
+if [[ x$pid != x ]]
+then
+    ret=`ps -p $pid | tail -n 1 | grep jupyter`
+    if [[ x$ret != x ]]
+    then
+        kill -9 $pid
+    fi
+fi
+
+jupyter notebook --notebook-dir=$currdir --browser='google-chrome' &
+echo "$!" > /tmp/jupyter_notebook_pid
