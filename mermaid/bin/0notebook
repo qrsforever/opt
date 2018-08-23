@@ -19,5 +19,5 @@ then
     fi
 fi
 
-jupyter notebook --notebook-dir=$currdir --browser='google-chrome' >/dev/null 2>&1 &
+jupyter notebook --notebook-dir=$currdir --browser='firefox' >/dev/null 2>&1 &
 echo "$!" > /tmp/jupyter_notebook_pid
