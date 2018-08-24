@@ -19,5 +19,5 @@ then
     fi
 fi
 
-jupyter notebook --notebook-dir=$currdir --browser='opera ?' >/dev/null 2>&1 &
+jupyter notebook --notebook-dir=$currdir --browser='opera %s' >/dev/null 2>&1 &
 echo "$!" > /tmp/jupyter_notebook_pid
