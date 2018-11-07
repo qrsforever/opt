@@ -25,7 +25,13 @@ if [[ x$ss == x"QRS" ]]
 then
     if [[ x$@ != x ]]
     then
-        vim -g -p --servername QRS --remote-tab-silent $@
+        have=`echo "$@" | grep servername`
+        if [[ x$have == x ]]
+        then
+            vim -g -p --servername QRS --remote-tab-silent $@
+        else
+            vim -g $@
+        fi
     else 
         vim -g -p --servername QRS --remote-send ":NERDTree $current_dir <cr>"
     fi
