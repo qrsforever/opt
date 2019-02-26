@@ -46,6 +46,15 @@ do
    fi
 done
 
+if [ -L $HOME/.goldendict ]
+then
+    if [ -d $HOME/.goldendict ]
+    then
+        rm -rf $HOME/.goldendict
+    fi
+    ln -s $current_dir/goldendict $HOME/.goldendict
+fi
+
 unset file
 unset current_dir
 
