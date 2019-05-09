@@ -46,12 +46,13 @@ do
    fi
 done
 
-if [ -L $HOME/.goldendict ]
+if [ -d $HOME/.goldendict ]
 then
-    if [ -d $HOME/.goldendict ]
-    then
-        rm -rf $HOME/.goldendict
-    fi
+    rm -rf $HOME/.goldendict
+fi
+
+if [ ! -f $HOME/.goldendict ]
+then
     ln -s $current_dir/goldendict $HOME/.goldendict
 fi
 
