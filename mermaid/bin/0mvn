@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# mvn archetype:generate -DgroupId=com.java.learn -DartifactId=top -DpacakgeName=com.java.learn -DinteractiveMode=false
+# mvn archetype:generate -DgroupId=com.java.learn -DartifactId=top -DpackageName=com.java.learn -DinteractiveMode=false
 
 default_groupId=com.java.learn
 default_artifactId=demo
@@ -32,12 +32,12 @@ __archetype_generate() {
     then
         interactiveMode=$default_interactiveMode
     fi
-    echo -e "mvn archetype:generate\n\t-DgroupId=$groupId\n\t-DartifactId=$artifactId\n\t-DpacakgeName=$packageName\n\t-DinteractiveMode=$interactiveMode"
+    echo -e "mvn archetype:generate\n\t-DgroupId=$groupId\n\t-DartifactId=$artifactId\n\t-DpackageName=$packageName\n\t-DinteractiveMode=$interactiveMode"
     echo -n "Conform(y/n): "
     read n
     if [[ x$n == xy ]]
     then
-        mvn archetype:generate -DgroupId=$groupId -DartifactId=$artifactId -DpacakgeName=$packageName -DinteractiveMode=$interactiveMode
+        mvn archetype:generate -DgroupId=$groupId -DartifactId=$artifactId -DpackageName=$packageName -DinteractiveMode=$interactiveMode
     fi
 }
 
