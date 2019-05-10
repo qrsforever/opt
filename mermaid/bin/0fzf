@@ -1,0 +1,18 @@
+#!/bin/bash
+
+FZF_DEFAULT_OPTS="-m --bind='ctrl-o:execute(gvim {})' "
+FZF_DEFAULT_OPTS+="--height 90% --layout=reverse "
+FZF_DEFAULT_OPTS+="--preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -20'"
+
+export FZF_DEFAULT_OPTS
+
+__fzf_open__ () {
+    p=''
+    if [[ $# > 1 ]]
+    then
+        p='-p'
+    fi
+    vim $p $*
+}
+
+__fzf_open__ $(fzf)
