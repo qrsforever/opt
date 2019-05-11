@@ -59,6 +59,12 @@ __archetype_generate() {
             sed -i "s/t\.company\.website/${groupId}/g" pom.xml
             sed -i "s/t\.project\.name/${artifactId}/g" pom.xml
             sed -i "s/t\.version/${version}/g" pom.xml
+            codes="package ${groupId};\n\n \
+            public class App {\n\ \
+            \tpublic static void main(String[] args) {\n \
+            \t}\n \
+            }"
+            echo -e $codes > src/main/java/$path/App.java
         fi
         # $mvn archetype:generate $args -X -B
         # -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=$groupId -DartifactId=$artifactId -DpackageName=$packageName -Dversion=$version 
