@@ -6,6 +6,10 @@ default_groupId=com.java.learn
 default_artifactId=demo
 default_packageName=$default_groupId
 default_interactiveMode=false
+default_version=1.0.0
+args="--settings $MERMAID_HOME/etc/mvn/settings.xml"
+
+mvn=`which mvn`
 
 __archetype_generate() {
     echo -n "-DgroupId=[$default_groupId] "
@@ -26,18 +30,38 @@ __archetype_generate() {
     then
         packageName=$default_packageName
     fi
-    echo -n "-DinteractiveMode=[$default_interactiveMode] "
-    read interactiveMode
-    if [[ x$interactiveMode == x ]]
+    echo -n "-Dversion=[$default_version] "
+    read version
+    if [[ x$version == x ]]
     then
-        interactiveMode=$default_interactiveMode
+        version=$default_version
     fi
-    echo -e "mvn archetype:generate\n\t-DgroupId=$groupId\n\t-DartifactId=$artifactId\n\t-DpackageName=$packageName\n\t-DinteractiveMode=$interactiveMode"
-    echo -n "Conform(y/n): "
+    # echo -n "-DinteractiveMode=[$default_interactiveMode] "
+    # read interactiveMode
+    # if [[ x$interactiveMode == x ]]
+    # then
+    #     interactiveMode=$default_interactiveMode
+    # fi
+    echo -e "mvn archetype:generate\n\t-DgroupId=$groupId\n\t-DartifactId=$artifactId\n\t-DpackageName=$packageName\n\t-Dversion=$version"
+    echo -n "Conform(y/n) y: "
     read n
-    if [[ x$n == xy ]]
+    if [[ x$n != xn ]]
     then
-        mvn archetype:generate -DgroupId=$groupId -DartifactId=$artifactId -DpackageName=$packageName -DinteractiveMode=$interactiveMode
+        if [[ ! -d $artifactId ]]
+        then
+            mkdir $artifactId
+            cd $artifactId/
+            path=${groupId//\./\/}
+            mkdir -p src/main/java/$path
+            mkdir -p src/main/resources
+            touch src/main/java/$path/App.java
+            cp $MERMAID_HOME/etc/mvn/pom.xml.template pom.xml
+            sed -i "s/t\.company\.website/${groupId}/g" pom.xml
+            sed -i "s/t\.project\.name/${artifactId}/g" pom.xml
+            sed -i "s/t\.version/${version}/g" pom.xml
+        fi
+        # $mvn archetype:generate $args -X -B
+        # -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=$groupId -DartifactId=$artifactId -DpackageName=$packageName -Dversion=$version 
     fi
 }
 
@@ -49,10 +73,12 @@ __main() {
         echo "3. dependency:resolve -Dclassifier=javadoc"
         echo "4. eclipse:eclipse"
         echo "5. package without test" 
+        echo "6. exec:java" 
         echo -n "Select: "
         read n
     else
-        n=$1
+        mvn $args $*
+        exit 0
     fi
 
     case $n in 
@@ -60,20 +86,29 @@ __main() {
             __archetype_generate
             ;;
         '2')
-            mvn dependency:sources
+            $mvn dependency:sources
             ;;
         '3')
-            mvn dependency:resove -Dclassifier=javadoc
+            $mvn dependency:resove -Dclassifier=javadoc
             ;;
         '4')
-            mvn eclipse:eclipse
+            $mvn eclipse:eclipse
             ;;  
         '5')
-            mvn package -Dmaven.test.skip=true
+            $mvn package -Dmaven.test.skip=true
+            ;;
+        '6')
+            $mvn exec:java
             ;;
         *)
             echo "error select ($n)"
     esac
 }
+
+if [[ x$mvn == x ]]
+then
+    echo "not install maven"
+    exit 0
+fi
 
 __main $*

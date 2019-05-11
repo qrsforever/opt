@@ -33,6 +33,7 @@
                 <repository>
                     <id>nexus</id>
                     <name>local private nexus</name>
+                    <!-- 超时 -->
                     <url>http://maven.oschina.net/content/groups/public/</url>
                     <releases>
                         <enabled>true</enabled>
@@ -71,6 +72,6 @@
     </profiles>
 
     <activeProfiles>
-        <activeProfile>nexus</activeProfile>
+        <!-- <activeProfile>nexus</activeProfile> -->
     </activeProfiles>
 </settings>
