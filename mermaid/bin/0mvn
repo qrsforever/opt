@@ -66,6 +66,8 @@ __archetype_generate() {
             \t}\n \
             }"
             echo -e $codes > src/main/java/$path/App.java
+            resxml="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n\n<app>\n\n</app>"
+            echo -e $resxml > src/main/resources/app.xml
         fi
         # $mvn archetype:generate $args -X -B
         # -DarchetypeArtifactId=maven-archetype-quickstart -DgroupId=$groupId -DartifactId=$artifactId -DpackageName=$packageName -Dversion=$version 
