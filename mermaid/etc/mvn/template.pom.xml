@@ -100,9 +100,10 @@
                     </execution>
                 </executions>
             </plugin>
+        </plugins>
 
-            <!-- 只是声明不自动导入, 统一管理项目的版本号 -->
-            <pluginManagement>
+        <!-- 只是声明不自动导入, 统一管理项目的版本号 -->
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
