@@ -55,12 +55,13 @@ __archetype_generate() {
             mkdir -p src/main/java/$path
             mkdir -p src/main/resources
             touch src/main/java/$path/App.java
-            cp $MERMAID_HOME/etc/mvn/pom.xml.template pom.xml
+            cp $MERMAID_HOME/etc/mvn/template.pom.xml pom.xml
+            cp $MERMAID_HOME/etc/mvn/assembly.xml assembly.xml
             sed -i "s/t\.company\.website/${groupId}/g" pom.xml
             sed -i "s/t\.project\.name/${artifactId}/g" pom.xml
             sed -i "s/t\.version/${version}/g" pom.xml
             codes="package ${groupId};\n\n \
-            public class App {\n\ \
+            public class App {\n \
             \tpublic static void main(String[] args) {\n \
             \t}\n \
             }"
