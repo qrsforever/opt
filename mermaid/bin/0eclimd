@@ -1,0 +1,21 @@
+#! /bin/bash
+
+DISPLAY_ID=6
+
+pid=`ps a | grep "Xvfb" | grep ":$DISPLAY_ID" | cut -d\  -f2`
+
+if [[ x$pid == x ]]
+then
+    Xvfb :6 -ac -screen 0 1024x768x24 &
+    sleep 1
+fi
+
+pid=`ps a | grep "org.eclim.application" | grep java | cut -d\  -f1`
+if [[ x$pid != x ]]
+then
+    echo "kill current eclimd $pid"
+    kill -9 $pid
+    sleep 2
+fi
+
+DISPLAY=:$DISPLAY_ID $ECLIPSE_HOME/eclimd -b
