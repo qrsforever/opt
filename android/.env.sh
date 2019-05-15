@@ -1,6 +1,6 @@
 #!/bin/bash
 
-make_opt_link android `pwd`/sdk
+make_opt_link sdk `pwd`/sdk
 
 export ANDROID_HOME=/opt/sdk
 export JNI_HOME=$ANDROID_HOME/../jni
