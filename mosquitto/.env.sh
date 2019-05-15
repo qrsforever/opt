@@ -1,6 +1,6 @@
 # !/bin/bash
 
-make_opt_link mosquitto `pwd`/mosquitto-1.4.14
+make_opt_link mosquitto `pwd`/mosquitto-1.6.2
 
 export MOSQUITTO_HOME=/opt/mosquitto
 
