@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAVEN_HOME=`pwd`/apache-maven-3.5.0
-export PATH=$MAVEN_HOME/bin:$PATH
+make_opt_link maven `pwd`/apache-maven-3.5.0
 
-make_opt_link maven $MAVEN_HOME
+MAVEN_HOME=/opt/maven
+export PATH=$MAVEN_HOME/bin:$PATH

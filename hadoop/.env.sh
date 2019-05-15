@@ -1,13 +1,13 @@
 # !/bin/bash
 
-export HADOOP_VERSION=2.7.3
-export HADOOP_HOME=`pwd`/hadoop-${HADOOP_VERSION}
-export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-
-export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+make_opt_link hadoop `pwd`/hadoop-2.7.3
 
 alias hls='hdfs dfs -ls'
 alias hcat='hdfs dfs -cat'
 alias hrm='hdfs dfs -rm -r -skipTrash'
 
-make_opt_link hadoop $HADOOP_HOME
+export HADOOP_HOME=/opt/hadoop
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+
+export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+

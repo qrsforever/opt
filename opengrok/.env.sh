@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# export CATALINA_HOME=$TOMCAT_HOME
+make_opt_link opengrok `pwd`/opengrok-1.1-rc11
+
 export OPENGROK_TOMCAT_BASE=/opt/tomcat
-export OPENGROK_VERSION=1.1-rc11
-export OPENGROK_HOME=`pwd`/opengrok-${OPENGROK_VERSION}
+export OPENGROK_HOME=/opt/opengrok
 export OPENGROK_INSTANCE_BASE=$OPENGROK_HOME
 export PATH=$OPENGROK_HOME/bin:$PATH
-
-make_opt_link opengrok $OPENGROK_HOME
