@@ -6,7 +6,7 @@ pid=`ps a | grep "Xvfb" | grep ":$DISPLAY_ID" | cut -d\  -f2`
 
 if [[ x$pid == x ]]
 then
-    Xvfb :6 -ac -screen 0 1024x768x24 &
+    Xvfb :$DISPLAY_ID -ac -screen 0 640x480x8 &
     sleep 1
 fi
 
