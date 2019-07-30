@@ -1,0 +1,22 @@
+[Unit]
+Description=Keeps a tunnel to 'remote.example.com' open
+After=network.target
+
+[Service]
+User=autossh
+# -p [PORT]
+# -M 0 --> no monitoring
+# -N Just open the connection and do nothing (not interactive)
+# LOCALPORT:IP_ON_EXAMPLE_COM:PORT_ON_EXAMPLE_COM
+# Need modify /etc/hosts: remote.ssh.com
+# ssh-copy-id lidong@remote.ssh.com
+# sudo cp autossh.service /etc/systemd/system/
+ExecStart=/usr/bin/autossh -M 0 -N -q -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -p 22 lidong@remote.ssh.com -L 7474:127.0.0.1:7474
+ExecStop=/usr/bin/killall autossh
+
+# Restart every >2 seconds to avoid StartLimitInterval failure
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
