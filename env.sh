@@ -53,7 +53,7 @@ fi
 
 if [ ! -f $HOME/.goldendict ]
 then
-    ln -s $current_dir/goldendict $HOME/.goldendict
+    ln -s $current_dir/goldendict $HOME/.goldendict 2>/dev/null
 fi
 
 unset file
