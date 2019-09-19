@@ -8,7 +8,8 @@ export data=/data
 export projects=/projects
 export tags=$projects/tags
 
-export PATH=$HOME/.vim/bin:$PATH
+# vim 是top级, 由vim加载本脚本
+# export PATH=$HOME/.vim/bin:$PATH
 
 make_opt_link()
 {
