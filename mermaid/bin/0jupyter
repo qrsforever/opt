@@ -2,9 +2,14 @@
 
 currdir=`pwd`
 
+if [[ x$BROWSER == x ]]
+then
+    export BROWSER=epiphany
+fi
+
 if [[ x$1 != x ]]
 then
-    jupyter notebook --notebook-dir=$currdir --port=9182 --browser='opera %s' >/dev/null 2>&1 &
+    jupyter notebook --notebook-dir=$currdir --port=9182 >/dev/null 2>&1 &
     exit 0
 fi
 
@@ -26,5 +31,5 @@ then
     fi
 fi
 
-jupyter notebook --notebook-dir=$currdir --port=9182 --browser='opera %s' >/dev/null 2>&1 &
+jupyter notebook --notebook-dir=$currdir --port=9182 >/dev/null 2>&1 &
 echo "$!" > /tmp/jupyter_notebook_pid
