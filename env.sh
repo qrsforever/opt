@@ -3,11 +3,6 @@
 current_dir=`dirname ${BASH_SOURCE[0]}`
 current_dir=`cd $current_dir; pwd`
 
-export workspace=/workspace
-export data=/data
-export projects=/projects
-export tags=$projects/tags
-
 # vim 是top级, 由vim加载本脚本
 # export PATH=$HOME/.vim/bin:$PATH
 
@@ -39,13 +34,13 @@ do
     fi
 done
 
-for file in `ls $workspace/tools 2>/dev/null`
-do
-   if [ -d $workspace/tools/$file/bin ] 
-   then
-        export PATH=$workspace/tools/$file/bin:$PATH
-   fi
-done
+# for file in `ls $workspace/tools 2>/dev/null`
+# do
+#    if [ -d $workspace/tools/$file/bin ] 
+#    then
+#         export PATH=$workspace/tools/$file/bin:$PATH
+#    fi
+# done
 
 if [ -d $HOME/.goldendict ]
 then
